@@ -14,6 +14,9 @@ function update() {
 }
 
 function run() {
+    var iframe = document.getElementById('-app-github-button');
+    iframe.src = iframe.attributes['data-src'].value;
+
     maghribSpan = document.getElementById('-app-maghrib-time');
 
     coordinates = [35.6, 51.4];
