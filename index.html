@@ -1,7 +1,11 @@
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
     <script type="text/javascript" src="js/PrayTimes.min.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="js/langs/fa.js"></script>
+    <script type="text/javascript" src="js/langs/ar.js"></script>
     <script type="text/javascript" src="js/time.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
@@ -14,10 +18,20 @@
         data-src="http://ghbtns.com/github-btn.html?user=mostafar&repo=iftar&type=watch"
         allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
 
+    <div id="-app-langs-container" class="langs">
+    </div>
+
     <div class="main">
-        <span class="label">Time of Iftar</span>
-        <br>
-        <span class="time" id="-app-maghrib-time"></span>
+        <div id="-app-content" class="content">
+            <span id="-app-time-label" class="label">Time of Iftar</span>
+            <br>
+            <span class="time" id="-app-maghrib-time"></span>
+
+            <br>
+            <img class="logo" src="images/ramadan.jpg" />
+
+        </div>
+
     </div>
 </body>
 </html>
