@@ -66,7 +66,7 @@ function requestTimeZone(latitude, longitude) {
 	}
 
     ajax.onreadystatechange = function() {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        if (ajax.readyState==4 && ajax.status==200)
         {
             var result = ajax.responseText;
             if (result == 'error') {
