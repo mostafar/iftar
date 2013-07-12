@@ -34,6 +34,56 @@ function changeLanguage(index) {
     update();
 }
 
+function changeLocation(location) {
+    coordinates = [location.latitude, location.longitude];
+    timezone = location.rawOffset / 3600;
+    dst = location.dstOffset / 3600;
+
+    // Fix bug in data for Tehran!
+    if (timezone == 3.5) {
+        dst = 1;
+    }
+}
+
+function requestTimeZone(latitude, longitude) {
+	var ajax;
+
+	try {
+		// Opera 8.0+, Firefox, Safari
+		ajax = new XMLHttpRequest();
+	} catch (e) {
+		// Internet Explorer Browsers
+		try {
+			ajax = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				ajax = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {
+				// Something went wrong
+				return false;
+			}
+		}
+	}
+
+    ajax.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var result = ajax.responseText;
+            if (result == 'error') {
+                return false;
+            }
+
+            var data = JSON.parse(result);
+            data.latitude = latitude;
+            data.longitude = longitude;
+            changeLocation(data);
+        }
+    };
+
+    ajax.open('timezone.php?latitude=' + latitude + '&longitude=' + longitude);
+    ajax.send();
+}
+
 function loadLanguages() {
     changeLanguage('en');
 
