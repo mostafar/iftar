@@ -111,17 +111,26 @@ function loadLanguages() {
 function run() {
     maghribSpan = document.getElementById('-app-maghrib-time');
 
-    coordinates = [35.6, 51.4];
-    timezone = 3.5;
-    dst = 1;
+    changeLocation({
+        dstOffset: 0.0,
+        rawOffset: 12600.0,
+        timeZoneId: 'Asia/Tehran',
+        timeZoneName: 'Iran Standard Time',
+        latitude: 35.5,
+        longitude: 51.6
+    });
 
-    calculateTimes();
     setInterval(calculateTimes, 1000 * 60);
-
-    update();
     setInterval(update, 1000);
 
     loadLanguages();
+
+    if (navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            requestTimeZone(position.coords.latitude, position.coords.longitude);
+        });
+    }
 
     var iframe = document.getElementById('-app-github-button');
     iframe.src = iframe.attributes['data-src'].value;
