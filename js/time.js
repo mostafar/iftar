@@ -1,18 +1,21 @@
-var maghribSpan, times,
+var maghribSpan, fajrSpan, times,
     coordinates, timezone, dst;
 
 var languages = {
     en: {
         label: 'English',
-        message: 'Time of Iftar'
+        iftar: 'Time of Iftar',
+        fajr: 'Fajr'
     },
     fa: {
         label: 'فارسی',
-        message: 'زمان افطار'
+        iftar: 'زمان افطار',
+        fajr: 'سحر'
     },
     ar: {
         label: 'العربية',
-        message: 'وقت الإفطار'
+        iftar: 'وقت الإفطار',
+        fajr: 'فجر'
     }
 };
 
@@ -23,14 +26,18 @@ function calculateTimes() {
 
 function update() {
     var maghribTime = times.maghrib.split(':'),
-        maghrib = moment().hours(maghribTime[0]).minutes(maghribTime[1]).seconds(0);
+        maghrib = moment().hours(maghribTime[0]).minutes(maghribTime[1]).seconds(0),
+        fajrTime = times.fajr.split(':'),
+        fajr = moment().hours(fajrTime[0]).minutes(fajrTime[1]).seconds(0);
 
     maghribSpan.innerHTML = maghrib.fromNow();
+    fajrSpan.innerHTML = fajr.fromNow();
 }
 
 function changeLanguage(index) {
     moment.lang(index);
-    document.getElementById('-app-time-label').innerHTML = languages[index].message;
+    document.getElementById('-maghrib-label').innerHTML = languages[index].iftar;
+    document.getElementById('-fajr-label').innerHTML = languages[index].fajr;
     update();
 }
 
@@ -50,7 +57,7 @@ function changeLocation(data) {
         (sum > 0 ? '+' : '') + Math.floor(sum) + ':' + (sum == Math.floor(sum) ? '00' : '30') +
         ' (' + data.latitude + ', ' + data.longitude + ')';
 
-    document.getElementById('-app-location').innerHTML = str;
+    document.getElementById('-location').innerHTML = str;
 
     calculateTimes();
     update();
@@ -98,7 +105,7 @@ function requestTimeZone(latitude, longitude) {
 function loadLanguages() {
     changeLanguage('en');
 
-    var langsContainer = document.getElementById('-app-langs-container');
+    var langsContainer = document.getElementById('-langs-container');
     for (var langIndex in languages) {
         var lang = languages[langIndex];
         var span = document.createElement('span');
@@ -109,7 +116,8 @@ function loadLanguages() {
 }
 
 function run() {
-    maghribSpan = document.getElementById('-app-maghrib-time');
+    maghribSpan = document.getElementById('-maghrib-time');
+    fajrSpan = document.getElementById('-fajr-time');
 
     changeLocation({
         dstOffset: 0.0,
@@ -132,6 +140,6 @@ function run() {
         });
     }
 
-    var iframe = document.getElementById('-app-github-button');
+    var iframe = document.getElementById('-github-button');
     iframe.src = iframe.attributes['data-src'].value;
 }
