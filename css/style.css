@@ -49,3 +49,11 @@ body {
 .github {
     float: right;
 }
+
+.location {
+    color: #a8a8a8;
+    padding-left: 5px;
+    font-size: 1.0em;
+    position: fixed;
+    bottom: 0;
+}

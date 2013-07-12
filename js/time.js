@@ -34,15 +34,26 @@ function changeLanguage(index) {
     update();
 }
 
-function changeLocation(location) {
-    coordinates = [location.latitude, location.longitude];
-    timezone = location.rawOffset / 3600;
-    dst = location.dstOffset / 3600;
+function changeLocation(data) {
+    coordinates = [data.latitude, data.longitude];
+    timezone = data.rawOffset / 3600;
+    dst = data.dstOffset / 3600;
 
     // Fix bug in data for Tehran!
     if (timezone == 3.5) {
         dst = 1;
     }
+
+    var sum = timezone + dst;
+    //    Asia/Tehran - Iran Standard Time UTC +04:30 (35.3535455, 51.3435345)
+    var str = data.timeZoneId + ' - ' + data.timeZoneName + ' UTC ' +
+        (sum > 0 ? '+' : '') + Math.floor(sum) + ':' + (sum == Math.floor(sum) ? '00' : '30') +
+        ' (' + data.latitude + ', ' + data.longitude + ')';
+
+    document.getElementById('-app-location').innerHTML = str;
+
+    calculateTimes();
+    update();
 }
 
 function requestTimeZone(latitude, longitude) {
