@@ -80,7 +80,7 @@ function requestTimeZone(latitude, longitude) {
         }
     };
 
-    ajax.open('timezone.php?latitude=' + latitude + '&longitude=' + longitude);
+    ajax.open('GET', 'timezone.php?latitude=' + latitude + '&longitude=' + longitude, true);
     ajax.send();
 }
 
